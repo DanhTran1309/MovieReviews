@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion SdkVersion.compileSdkVersion
@@ -22,6 +25,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -30,9 +50,30 @@ dependencies {
     implementation AndroidLibraries.coreKtx
     implementation AndroidLibraries.appCompat
     implementation AndroidLibraries.constraintLayout
+    implementation AndroidLibraries.material
+    implementation AndroidLibraries.lifecycleViewModel
+    implementation AndroidLibraries.lifecycleExtensions
+    implementation AndroidLibraries.recyclerView
+    implementation AndroidLibraries.navigation
+    implementation AndroidLibraries.navigationFragment
+    implementation AndroidLibraries.paging
+
+    implementation AndroidLibraries.hiltAndroid
+    kapt AndroidLibraries.hiltCompiler
+
+    implementation Libraries.retrofit
+    implementation Libraries.retrofitGsonConverter
+    implementation Libraries.httpLoggingInterceptor
+    implementation Libraries.gson
+
+    implementation Libraries.glide
+    annotationProcessor Libraries.glideCompiler
+
+    implementation Libraries.rxandroid
+    implementation Libraries.rxjava
+    implementation Libraries.rxkotlin
 
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.extJunit
     androidTestImplementation TestLibraries.espressoCore
-
 }
